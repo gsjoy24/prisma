@@ -16,8 +16,14 @@ const main = async () => {
 	const findUnique = await prisma.post.findUnique({
 		where: {
 			id: 1 // the id property is unique in the post model
+		},
+		select: {
+			title: true,
+			content: true
 		}
 	});
+
+	console.log({ findUnique });
 };
 
 main();
