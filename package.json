@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "ts-node-dev --respawn --transpile-only src/relational-queries.ts",
+    "dev": "ts-node-dev --respawn --transpile-only src/filtering.ts",
     "migrate": "npx prisma migrate dev",
     "studio": "npx prisma studio"
   },
