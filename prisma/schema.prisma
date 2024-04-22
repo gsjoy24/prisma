@@ -8,23 +8,56 @@ datasource db {
 }
 
 model Post {
-  id Int @id @default(autoincrement())
-  title String
-  content String? // ? means optional
-  published Boolean @default(false)
-  authorId Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           Int            @id @default(autoincrement())
+  title        String
+  content      String? // ? means optional
+  published    Boolean        @default(false)
+  authorId     Int
+  author       User           @relation(fields: [authorId], references: [id])
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  postCategory PostCategory[]
 
   @@map("posts")
 }
+
 model User {
-  id Int @id @default(autoincrement())
-  userName String @unique
-  email  String
-  role userRole
+  id       Int      @id @default(autoincrement())
+  userName String   @unique
+  email    String
+  role     userRole @default(user)
+  pofile   Profile? // one-to-one relation
+  post     Post[]
 
   @@map("users")
+}
+
+model Profile {
+  id     Int     @id @default(autoincrement())
+  bio    String?
+  userId Int     @unique
+  user   User    @relation(fields: [userId], references: [id])
+
+  @@map("profiles")
+}
+
+model Category {
+  id           Int            @id @default(autoincrement())
+  name         String
+  postCategory PostCategory[]
+
+  @@map("categories")
+}
+
+model PostCategory {
+  postId Int
+  post   Post @relation(fields: [postId], references: [id])
+
+  categoryId Int
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  @@id([postId, categoryId])
+  @@map("post_categories")
 }
 
 enum userRole {
