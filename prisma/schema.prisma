@@ -12,9 +12,22 @@ model Post {
   title String
   content String? // ? means optional
   published Boolean @default(false)
+  authorId Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@map("posts")
 }
+model User {
+  id Int @id @default(autoincrement())
+  userName String @unique
+  email  String
+  role userRole
 
+  @@map("users")
+}
+
+enum userRole {
+  user
+  admin
+}
